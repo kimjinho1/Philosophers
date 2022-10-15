@@ -6,19 +6,17 @@
 /*   By: jinhokim <jinhokim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 10:19:54 by jinhokim          #+#    #+#             */
-/*   Updated: 2022/10/15 16:18:24 by jinhokim         ###   ########.fr       */
+/*   Updated: 2022/10/15 18:18:45 by jinhokim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	join_free(t_info *info)
+static void	join_free(t_info *info)
 {
 	int	i;
 
 	i = -1;
-	while (!check_finish(&info->philos[0], 0))
-		ft_sleep(10);
 	while (++i < info->num_philo)
 		pthread_join(info->philos[i].thread, NULL);
 	free(info->philos);
@@ -31,6 +29,26 @@ void	join_free(t_info *info)
 	pthread_mutex_destroy(&info->finish_mutex);
 }
 
+void	destroy(t_info *info)
+{
+	int	i;
+	int	yes;
+
+	yes = 1;
+	while (yes)
+	{
+		i = -1;
+		while (++i < info->num_philo)
+		{
+			if (yes && check_dead(&info->philos[i]))
+				yes = 0;
+		}
+		usleep(10);
+	}
+	printf("finish\n");
+	join_free(info);
+}
+
 int	main(int ac, char **av)
 {
 	t_info	info;
@@ -39,5 +57,5 @@ int	main(int ac, char **av)
 		return (0);
 	if (create_philos(&info))
 		return (0);
-	join_free(&info);
+	destroy(&info);
 }

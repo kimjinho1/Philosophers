@@ -6,7 +6,7 @@
 /*   By: jinhokim <jinhokim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 20:44:18 by jinhokim          #+#    #+#             */
-/*   Updated: 2022/10/15 15:18:54 by jinhokim         ###   ########.fr       */
+/*   Updated: 2022/10/15 18:14:13 by jinhokim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,11 @@ void	print_status(t_philo *philo, const char *str)
 	pthread_mutex_unlock(&philo->info->print_mutex);
 }
 
-void	ft_sleep(long long ms)
+void	ft_sleep(t_philo *philo, long long ms)
 {
 	long long	t;
 
 	t = get_time();
-	while ((get_time() - t) < ms)
-		usleep(10);
+	while (!check_finish(philo, 0) && (get_time() - t) < ms)
+		usleep(100);
 }
