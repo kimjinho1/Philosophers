@@ -6,7 +6,7 @@
 /*   By: jinhokim <jinhokim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 10:19:54 by jinhokim          #+#    #+#             */
-/*   Updated: 2022/10/15 18:47:20 by jinhokim         ###   ########.fr       */
+/*   Updated: 2022/10/15 18:53:14 by jinhokim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,27 +29,6 @@ static void	join_free(t_info *info)
 	pthread_mutex_destroy(&info->finish_mutex);
 }
 
-/*
-void	destroy(t_info *info)
-{
-	int	i;
-	int	yes;
-
-	yes = 1;
-	while (yes)
-	{
-		i = -1;
-		while (++i < info->num_philo)
-		{
-			if (yes && check_dead(&info->philos[i]))
-				yes = 0;
-		}
-		usleep(10);
-	}
-	join_free(info);
-}
-*/
-
 void	destroy(t_info *info)
 {
 	int	i;
@@ -62,14 +41,13 @@ void	destroy(t_info *info)
 		info->num_full_philo = 0;
 		while (++i < info->num_philo)
 		{
-			if (yes && check_dead(info, i))
+			if (yes && check_dead(&info->philos[i]))
 				yes = 0;
 		}
 		usleep(10);
 	}
 	join_free(info);
 }
-
 
 int	main(int ac, char **av)
 {

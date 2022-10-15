@@ -6,7 +6,7 @@
 /*   By: jinhokim <jinhokim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 20:44:46 by jinhokim          #+#    #+#             */
-/*   Updated: 2022/10/15 18:29:36 by jinhokim         ###   ########.fr       */
+/*   Updated: 2022/10/15 18:53:04 by jinhokim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,7 @@ void		ft_sleep(t_philo *philo, long long ms);
 int			init(t_info *info, int ac, char **av);
 int			create_philos(t_info *info);
 
-//int			check_dead(t_philo *philo);
-int			check_dead(t_info *info, int i);
+int			check_dead(t_philo *philo);
 int			check_finish(t_philo *philo, int yes);
 void		*philo_start(void *arg);
 

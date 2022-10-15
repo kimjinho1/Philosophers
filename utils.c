@@ -6,7 +6,7 @@
 /*   By: jinhokim <jinhokim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 20:44:18 by jinhokim          #+#    #+#             */
-/*   Updated: 2022/10/15 18:14:13 by jinhokim         ###   ########.fr       */
+/*   Updated: 2022/10/15 18:59:50 by jinhokim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ void	print_status(t_philo *philo, const char *str)
 		printf("%lld %d %s\n", t, philo->id, str);
 	}
 	pthread_mutex_unlock(&philo->info->print_mutex);
+	if (str[0] == 'f')
+		printf("Philosophers Success\n");
 }
 
 void	ft_sleep(t_philo *philo, long long ms)
