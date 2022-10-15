@@ -6,7 +6,7 @@
 /*   By: jinhokim <jinhokim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 20:44:13 by jinhokim          #+#    #+#             */
-/*   Updated: 2022/10/15 18:14:41 by jinhokim         ###   ########.fr       */
+/*   Updated: 2022/10/15 18:22:14 by jinhokim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ int	create_philos(t_info *info)
 	int	i;
 
 	i = -1;
-	/*
 	if (info->num_philo == 1)
 	{
 		print_status(&info->philos[0], "has taken a fork");
@@ -101,7 +100,6 @@ int	create_philos(t_info *info)
 		check_finish(&info->philos[0], 1);
 		return (0);
 	}
-	*/
 	while (++i < info->num_philo)
 	{
 		if (pthread_create(&info->philos[i].thread, NULL, philo_start, \
