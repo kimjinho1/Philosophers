@@ -6,7 +6,7 @@
 #    By: jinhokim <jinhokim@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/12 20:40:15 by jinhokim          #+#    #+#              #
-#    Updated: 2022/10/15 15:18:14 by jinhokim         ###   ########.fr        #
+#    Updated: 2022/10/15 16:15:12 by jinhokim         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,8 @@ SRCS = main.c \
 		philo.c \
 
 CC = cc
-FLAGS = -Wall -Wextra -Werror -g -fsanitize=thread
+#FLAGS = -Wall -Wextra -Werror -g -fsanitize=thread
+FLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 #FLAGS = -Wall -Wextra -Werror
 RM = rm -rf
 
