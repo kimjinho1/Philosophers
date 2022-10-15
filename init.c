@@ -34,7 +34,6 @@ static int	init_info(t_info *info, int ac, char **av)
 	}
 	else
 		info->num_must_eat = -1;
-	info->num_full_philo = 0;
 	info->finish = 0;
 	return (0);
 }

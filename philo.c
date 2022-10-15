@@ -6,7 +6,7 @@
 /*   By: jinhokim <jinhokim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 14:39:50 by jinhokim          #+#    #+#             */
-/*   Updated: 2022/10/15 19:03:48 by jinhokim         ###   ########.fr       */
+/*   Updated: 2022/10/15 20:53:11 by jinhokim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	*philo_start(void *arg)
 
 	philo = (t_philo *)arg;
 	if (philo->id % 2 == 0)
-		usleep(philo->info->time_to_eat);
+		usleep(100);
 	while (42)
 	{
 		if (check_finish(philo, 0))

@@ -28,7 +28,6 @@ typedef struct s_philo
 	long long		last_eat_time;
 	struct s_info	*info;
 	pthread_t		thread;
-	pthread_t		check_thread;
 }					t_philo;
 
 typedef struct s_info
