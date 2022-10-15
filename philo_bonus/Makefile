@@ -5,12 +5,12 @@
 #                                                     +:+ +:+         +:+      #
 #    By: jinhokim <jinhokim@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/10/12 20:40:15 by jinhokim          #+#    #+#              #
-#    Updated: 2022/10/15 19:42:10 by jinhokim         ###   ########.fr        #
+#    Created: 2022/10/15 20:57:16 by jinhokim          #+#    #+#              #
+#    Updated: 2022/10/15 20:57:24 by jinhokim         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = philo
+NAME = philo_bonus
 
 SRCS = main.c \
 		utils.c \
