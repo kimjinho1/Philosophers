@@ -6,7 +6,7 @@
 /*   By: jinhokim <jinhokim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 20:59:17 by jinhokim          #+#    #+#             */
-/*   Updated: 2022/10/16 22:31:48 by jinhokim         ###   ########.fr       */
+/*   Updated: 2022/10/17 07:54:23 by jinhokim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,12 @@ typedef struct s_info
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				num_must_eat;
+	int				finish;
 	long long		start_time;
 	t_philo			*philos;
 	sem_t			*forks;
 	sem_t			*print_sem;
 	sem_t			*eat_sem;
-	sem_t			*full_finish_sem;
-	sem_t			*finish_sem;
 }					t_info;
 
 int			print_error(char *message);
@@ -56,8 +55,6 @@ int			init_info(t_info *info, int ac, char **av);
 int			init_philos(t_info *info);
 void		fork_philos(t_info *info);
 
-void		*check_eat_finish(void *arg);
-void		*check_finish(void *arg);
 void		*check_dead(void *arg);
 void		philo_start(t_philo *philo);
 

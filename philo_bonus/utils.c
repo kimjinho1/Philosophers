@@ -6,7 +6,7 @@
 /*   By: jinhokim <jinhokim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 20:59:33 by jinhokim          #+#    #+#             */
-/*   Updated: 2022/10/16 21:28:12 by jinhokim         ###   ########.fr       */
+/*   Updated: 2022/10/17 08:05:15 by jinhokim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,6 @@ void	print_status(t_philo *philo, const char *str)
 {
 	long long	t;
 
-	if (str[0] == 'f')
-	{
-		printf("Philosophers Success\n");
-		return ;
-	}
 	sem_wait(philo->info->print_sem);
 	t = get_time() - philo->info->start_time;
 	printf("%lld %d %s\n", t, philo->id, str);

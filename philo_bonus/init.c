@@ -6,7 +6,7 @@
 /*   By: jinhokim <jinhokim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 20:59:22 by jinhokim          #+#    #+#             */
-/*   Updated: 2022/10/16 22:36:54 by jinhokim         ###   ########.fr       */
+/*   Updated: 2022/10/17 07:52:25 by jinhokim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	init_info(t_info *info, int ac, char **av)
 	}
 	else
 		info->num_must_eat = -1;
+	info->finish = 0;
 	return (0);
 }
 
@@ -41,11 +42,9 @@ static sem_t	*init_sem(const char *name, unsigned int n)
 {
 	sem_t	*sem;
 
-	sem = sem_open(name, O_CREAT | O_EXCL, 0644, n);
-	if (sem != SEM_FAILED)
-		return (sem);
+	sem = sem_open(name, O_CREAT, 0644, n);
 	sem_unlink(name);
-	return (sem_open(name, O_CREAT | O_EXCL, 0644, n));
+	return (sem);
 }
 
 int	init_philos(t_info *info)
@@ -59,8 +58,9 @@ int	init_philos(t_info *info)
 	info->forks = init_sem("forks", info->num_philo);
 	info->eat_sem = init_sem("eat", 1);
 	info->print_sem = init_sem("print", 1);
-	info->full_finish_sem = init_sem("full_finish", 0);
-	info->finish_sem = init_sem("finish", 0);
+	if (info->forks == SEM_FAILED || info->eat_sem == SEM_FAILED || \
+			info->print_sem == SEM_FAILED)
+		return (print_error("Error: sem_open\n"));
 	while (++i < info->num_philo)
 	{
 		info->philos[i].id = i + 1;
