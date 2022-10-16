@@ -6,7 +6,7 @@
 /*   By: jinhokim <jinhokim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 20:59:33 by jinhokim          #+#    #+#             */
-/*   Updated: 2022/10/15 20:59:34 by jinhokim         ###   ########.fr       */
+/*   Updated: 2022/10/16 21:28:12 by jinhokim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,22 +62,22 @@ void	print_status(t_philo *philo, const char *str)
 {
 	long long	t;
 
-	pthread_mutex_lock(&philo->info->print_mutex);
-	if (!check_finish(philo, 0))
-	{
-		t = get_time() - philo->info->start_time;
-		printf("%lld %d %s\n", t, philo->id, str);
-	}
-	pthread_mutex_unlock(&philo->info->print_mutex);
 	if (str[0] == 'f')
+	{
 		printf("Philosophers Success\n");
+		return ;
+	}
+	sem_wait(philo->info->print_sem);
+	t = get_time() - philo->info->start_time;
+	printf("%lld %d %s\n", t, philo->id, str);
+	sem_post(philo->info->print_sem);
 }
 
-void	ft_sleep(t_philo *philo, long long ms)
+void	ft_sleep(long long ms)
 {
 	long long	t;
 
 	t = get_time();
-	while (!check_finish(philo, 0) && (get_time() - t) < ms)
+	while ((get_time() - t) < ms)
 		usleep(100);
 }

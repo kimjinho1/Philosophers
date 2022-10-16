@@ -6,7 +6,7 @@
 /*   By: jinhokim <jinhokim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 20:59:22 by jinhokim          #+#    #+#             */
-/*   Updated: 2022/10/16 17:43:22 by jinhokim         ###   ########.fr       */
+/*   Updated: 2022/10/16 21:49:11 by jinhokim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,18 @@ int	init_info(t_info *info, int ac, char **av)
 	}
 	else
 		info->num_must_eat = -1;
-	info->finish = 0;
 	return (0);
+}
+
+static sem_t	*init_sem(const char *name, unsigned int n)
+{
+	sem_t	*sem;
+
+	sem = sem_open(name, O_CREAT | O_EXCL, 0644, n);
+	if (sem != SEM_FAILED)
+		return (sem);
+	sem_unlink(name);
+	return (sem_open(name, O_CREAT | O_EXCL, 0644, n));
 }
 
 int	init_philos(t_info *info)
@@ -44,59 +54,35 @@ int	init_philos(t_info *info)
 
 	i = -1;
 	info->philos = malloc(sizeof(t_philo) * info->num_philo);
-	info->forks = malloc(sizeof(pthread_mutex_t) * info->num_philo);
-	info->start_time = get_time();
-	if (!info->philos || !info->forks)
+	if (!info->philos)
 		return (print_error("Error: init_philos malloc\n"));
+	info->forks = init_sem("forks", info->num_philo);
+	info->eat_sem = init_sem("eat", 1);
+	info->print_sem = init_sem("print", 1);
+	info->full_finish_sem = init_sem("full_finish", 0);
+	info->finish_sem = init_sem("finish", 0);
 	while (++i < info->num_philo)
 	{
 		info->philos[i].id = i + 1;
-		info->philos[i].left_fork = i;
-		info->philos[i].right_fork = (i + 1) % info->num_philo;
 		info->philos[i].eat_cnt = 0;
-		info->philos[i].last_eat_time = info->start_time;
 		info->philos[i].info = info;
 	}
 	return (0);
 }
 
-int	init_mutex(t_info *info)
+void	fork_philos(t_info *info)
 {
 	int	i;
 
 	i = -1;
+	info->start_time = get_time();
 	while (++i < info->num_philo)
 	{
-		if (pthread_mutex_init(&info->forks[i], NULL))
-			return (print_error("Error: forks mutex_init\n"));
+		info->philos[i].last_eat_time = info->start_time;
+		info->philos[i].pid = fork();
+		if (info->philos[i].pid == 0)
+			philo_start(&info->philos[i]);
+		else if (info->philos[i].pid < 0)
+			exit(print_error("Error: fork fail\n"));
 	}
-	if (pthread_mutex_init(&info->print_mutex, NULL))
-		return (print_error("Error: print mutex_init\n"));
-	if (pthread_mutex_init(&info->eat_mutex, NULL))
-		return (print_error("Error: eat mutex_init\n"));
-	if (pthread_mutex_init(&info->finish_mutex, NULL))
-		return (print_error("Error: finish mutex_init\n"));
-	return (0);
-}
-
-int	create_philos(t_info *info)
-{
-	int	i;
-
-	i = -1;
-	if (info->num_philo == 1)
-	{
-		print_status(&info->philos[0], "has taken a fork");
-		ft_sleep(&info->philos[0], info->time_to_die);
-		print_status(&info->philos[0], "died");
-		check_finish(&info->philos[0], 1);
-		return (0);
-	}
-	while (++i < info->num_philo)
-	{
-		if (pthread_create(&info->philos[i].thread, NULL, philo_start, \
-			&(info->philos[i])))
-			return (print_error("Error: philos thread create\n"));
-	}
-	return (0);
 }
