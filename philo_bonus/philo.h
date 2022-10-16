@@ -6,7 +6,7 @@
 /*   By: jinhokim <jinhokim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 20:59:17 by jinhokim          #+#    #+#             */
-/*   Updated: 2022/10/15 20:59:19 by jinhokim         ###   ########.fr       */
+/*   Updated: 2022/10/16 17:43:07 by jinhokim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,18 @@ long long	get_time(void);
 void		print_status(t_philo *philo, const char *message);
 void		ft_sleep(t_philo *philo, long long ms);
 
-int			init(t_info *info, int ac, char **av);
+int			init_info(t_info *info, int ac, char **av);
+int			init_philos(t_info *info);
+int			init_mutex(t_info *info);
 int			create_philos(t_info *info);
 
 int			check_dead(t_philo *philo);
 int			check_finish(t_philo *philo, int yes);
 void		*philo_start(void *arg);
 
+int			free_info(t_info *info);
+int			free_destroy(t_info *info);
+void		join_free_destroy(t_info *info);
 void		destroy(t_info *info);
 
 #endif

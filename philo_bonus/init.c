@@ -6,13 +6,13 @@
 /*   By: jinhokim <jinhokim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 20:59:22 by jinhokim          #+#    #+#             */
-/*   Updated: 2022/10/15 20:59:24 by jinhokim         ###   ########.fr       */
+/*   Updated: 2022/10/16 17:43:22 by jinhokim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static int	init_info(t_info *info, int ac, char **av)
+int	init_info(t_info *info, int ac, char **av)
 {
 	int	i;
 
@@ -38,7 +38,7 @@ static int	init_info(t_info *info, int ac, char **av)
 	return (0);
 }
 
-static int	init_philos(t_info *info)
+int	init_philos(t_info *info)
 {
 	int	i;
 
@@ -60,7 +60,7 @@ static int	init_philos(t_info *info)
 	return (0);
 }
 
-static int	init_mutex(t_info *info)
+int	init_mutex(t_info *info)
 {
 	int	i;
 
@@ -76,13 +76,6 @@ static int	init_mutex(t_info *info)
 		return (print_error("Error: eat mutex_init\n"));
 	if (pthread_mutex_init(&info->finish_mutex, NULL))
 		return (print_error("Error: finish mutex_init\n"));
-	return (0);
-}
-
-int	init(t_info *info, int ac, char **av)
-{
-	if (init_info(info, ac, av) || init_philos(info) || init_mutex(info))
-		return (1);
 	return (0);
 }
 
