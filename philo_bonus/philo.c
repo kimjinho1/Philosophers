@@ -6,7 +6,7 @@
 /*   By: jinhokim <jinhokim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 20:59:28 by jinhokim          #+#    #+#             */
-/*   Updated: 2022/10/17 08:10:38 by jinhokim         ###   ########.fr       */
+/*   Updated: 2022/10/17 08:26:26 by jinhokim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	*check_dead(void *arg)
 			break ;
 		}
 		sem_post(philo->info->eat_sem);
-		usleep(10000);
+		usleep(5000);
 	}
 	return (NULL);
 }
