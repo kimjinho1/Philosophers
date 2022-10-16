@@ -6,7 +6,7 @@
 /*   By: jinhokim <jinhokim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 20:59:17 by jinhokim          #+#    #+#             */
-/*   Updated: 2022/10/16 21:39:45 by jinhokim         ###   ########.fr       */
+/*   Updated: 2022/10/16 22:31:48 by jinhokim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void		fork_philos(t_info *info);
 
 void		*check_eat_finish(void *arg);
 void		*check_finish(void *arg);
+void		*check_dead(void *arg);
 void		philo_start(t_philo *philo);
 
 #endif

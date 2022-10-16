@@ -6,7 +6,7 @@
 /*   By: jinhokim <jinhokim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 20:59:28 by jinhokim          #+#    #+#             */
-/*   Updated: 2022/10/16 22:20:39 by jinhokim         ###   ########.fr       */
+/*   Updated: 2022/10/16 22:36:09 by jinhokim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,7 @@ void	*check_eat_finish(void *arg)
 	i = -1;
 	info = arg;
 	while (++i < info->num_philo)
-	{
-		printf("id: %d wait\n", i + 1);
 		sem_wait(info->full_finish_sem);
-	}
 	sem_post(info->finish_sem);
 	print_status(&info->philos[0], "f");
 	return (NULL);
@@ -49,13 +46,13 @@ static void	eat(t_philo *philo)
 	sem_wait(philo->info->forks);
 	print_status(philo, "has taken a fork");
 	print_status(philo, "is eating");
-	sem_post(philo->info->forks);
-	sem_post(philo->info->forks);
 	ft_sleep(philo->info->time_to_eat);
 	sem_wait(philo->info->eat_sem);
 	philo->eat_cnt += 1;
 	philo->last_eat_time = get_time();
 	sem_post(philo->info->eat_sem);
+	sem_post(philo->info->forks);
+	sem_post(philo->info->forks);
 }
 
 void	*check_dead(void *arg)
@@ -77,7 +74,7 @@ void	*check_dead(void *arg)
 				philo->info->num_must_eat)
 		{
 			sem_post(philo->info->eat_sem);
-			sem_post(philo->info->full_finish_sem);
+			sem_wait(philo->info->full_finish_sem);
 			return (NULL);
 		}
 		sem_post(philo->info->eat_sem);

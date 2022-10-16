@@ -6,18 +6,11 @@
 /*   By: jinhokim <jinhokim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 20:57:39 by jinhokim          #+#    #+#             */
-/*   Updated: 2022/10/16 22:17:04 by jinhokim         ###   ########.fr       */
+/*   Updated: 2022/10/16 22:30:47 by jinhokim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-static int	free_info(t_info *info)
-{
-	free(info->philos);
-	free(info->forks);
-	return (0);
-}
 
 static void	close_info(t_info *info)
 {
@@ -45,7 +38,10 @@ int	main(int ac, char **av)
 	if (init_info(&info, ac, av))
 		return (0);
 	if (init_philos(&info))
-		return (free_info(&info));
+	{
+		free(info.philos);
+		return (0);
+	}
 	fork_philos(&info);
 	if (info.num_must_eat > 0)
 		pthread_create(&thread, NULL, check_eat_finish, &info);
